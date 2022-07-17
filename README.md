@@ -49,3 +49,7 @@ python3 server.py
 - [x] - upload
 - [x] - sysinfo
 - [x] - exit
+
+# Credits
+
+[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/gokimax_x.svg?style=social&label=Follow%20%40bukotsunikki)](https://twitter.com/gokimax_x)
