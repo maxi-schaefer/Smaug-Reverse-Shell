@@ -2,7 +2,6 @@
 # Made by gokiimax
 import os
 import json
-import time
 import base64
 import socket
 from colorama import Fore
