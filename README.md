@@ -52,4 +52,4 @@ python3 server.py
 
 # Credits
 
-[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/gokimax_x.svg?style=social&label=Follow%20%40bukotsunikki)](https://twitter.com/gokimax_x)
+[![Twitter URL](https://img.shields.io/twitter/url/https/twitter.com/gokimax_x.svg?style=social&label=Follow%20%40gokimax_x)](https://twitter.com/gokimax_x)
