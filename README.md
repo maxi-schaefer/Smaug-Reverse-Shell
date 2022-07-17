@@ -4,7 +4,7 @@ Smaug is a simple in python written Reverse Shell
 ---
 
 ## 📄 │ Commands
-```
+
 ╭─────────────────╮
 │ [0] help        │ >> Show all available commands
 │ [1] cd          │ >> Change the current directory
@@ -22,4 +22,3 @@ Smaug is a simple in python written Reverse Shell
 │ [13] sysinfo    │ >> Shows Information about the victims PC
 │ [14] exit       │ >> Exit the application from both sites
 ╰─────────────────╯
-```
