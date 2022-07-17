@@ -9,6 +9,12 @@ Smaug is a simple in python written Reverse Shell
 
 You need python installed to use this application
 
+Clone the repository and cd in to it
+```
+git clone https://github.com/gokiimax/Smaug.git
+cd Smaug
+```
+
 1. Install Requirements
 ```
 python3 -m pip install -r requirements.txt
@@ -25,3 +31,21 @@ pyinstaller --noconfirm --onefile --console "./client.pyw"
 cd server
 python3 server.py
 ```
+
+## Commands
+
+- [x] - help
+- [x] - cd
+- [x] - turnmonoff
+- [x] - turnmonon
+- [x] - checkadmin
+- [x] - localtime
+- [x] - clear
+- [x] - reboot
+- [x] - shutdown
+- [x] - lock
+- [x] - screenshot
+- [x] - download
+- [x] - upload
+- [x] - sysinfo
+- [x] - exit
