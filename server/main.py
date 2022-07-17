@@ -1,5 +1,5 @@
 #!/usr/bin
-# Made by p3rpl3x
+# Made by gokiimax
 import os
 import json
 import time
