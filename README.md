@@ -1,6 +1,10 @@
 # Smaug
 Smaug is a simple in python written Reverse Shell
-
+<p align="center">
+	<a href="https://discord.gg/yVWygKS3Xn">
+		<img src="https://canary.discordapp.com/api/guilds/999373116918743100/embed.png" alt="Discord server">
+	</a>
+</p>
 ---
 
 ![demo](/images/demo.png)
