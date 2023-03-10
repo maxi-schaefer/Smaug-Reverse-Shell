@@ -1,11 +1,5 @@
 # Smaug
 Smaug is a simple in python written Reverse Shell
-<p align="center">
-	<a href="https://discord.gg/yVWygKS3Xn">
-		<img src="https://canary.discordapp.com/api/guilds/999373116918743100/embed.png" alt="Discord server">
-	</a>
-</p>
----
 
 ![demo](/images/demo.png)
 
@@ -24,38 +18,34 @@ cd Smaug
 python3 -m pip install -r requirements.txt
 ```
 
-2. Create exe from client.pyw
+2. Configure [config.json](./config.json) and Create the payload
+```
+./start.bat
+
+╭── [ Smaug@admin ]
+╰──────# createpayload
+```
+
+3. Create exe from client.pyw
 ```
 python3 -m pip install auto-py-to-exe
-pyinstaller --noconfirm --onefile --console "./client.pyw"
+pyinstaller --noconfirm --onefile --console "./out/client.pyw"
 ```
 
-3. Send Your new Exe file to your victim and Start the server
+4. Send Your new Exe file to your victim and Start the server
 ```
-cd server
-python3 server.py
+./start
+
+╭── [ Smaug@admin ]
+╰──────# start server
 ```
 
-## Commands
+## TODO
 
-- [x] - help
-- [x] - cd
-- [x] - turnmonoff
-- [x] - turnmonon
-- [x] - checkadmin
-- [x] - localtime
-- [x] - clear
-- [x] - reboot
-- [x] - shutdown
-- [x] - lock
-- [x] - screenshot
-- [x] - download
-- [x] - upload
-- [x] - sysinfo
-- [x] - exit
+- [x] - Config
+- [x] - Create Payload
+- [ ] - Obfuscation for bypass
+- [ ] - Update Checker
 
 # Credits
-
-[![TikTok Link](https://img.shields.io/badge/TikTok-000000?style=for-the-badge&logo=tiktok&logoColor=white)](https://tiktok.com/@maxii.x6)
 [![Twitter Link](https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/gokimax_x)
-[![Insta Link](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/maxii.x6)

