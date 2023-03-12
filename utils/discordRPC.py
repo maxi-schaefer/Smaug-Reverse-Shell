@@ -4,11 +4,11 @@ from pypresence import Presence
 
 class Discord():
 
-    def __init__(self, client_id):
+    def __init__(self, client_id, version):
         RPC = Presence(client_id)
         RPC.connect()
         RPC.update(
-            state="Time is what determines security",
+            state=f"Version: {version}",
             large_image="large",
             large_text="Smaug",
             small_image="small",

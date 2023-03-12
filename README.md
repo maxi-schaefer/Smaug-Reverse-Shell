@@ -1,7 +1,9 @@
-# Smaug
-Smaug is a simple in python written Reverse Shell
+<div style="display: flex; justify-content: center; align-items: center;">
+    <img src="./images/icon.png" height=50 style="margin-right: 15px">
+    <h2 style="text-decoration: underline; color: #c24164">Smaug</h2>
+</div>
 
-![demo](/images/demo.png)
+<img src="/images/demo.png" style="border-radius: 12px; box-shadow: 0px 0px 15px #c24164;"/>
 
 ## Installation
 

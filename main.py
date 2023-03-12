@@ -7,10 +7,13 @@ import socket
 from colorama import Fore
 from utils.config import *
 from utils.discordRPC import *
+from utils.UpdateChecker import *
 
 # ============================================================================================================================ #
 
 config = Config("config.json")
+
+version = open("./version.txt").read()
 
 host = config.get("host")
 port = config.get("port")
@@ -33,7 +36,7 @@ banner = f"""{Fore.LIGHTRED_EX}
       / ,.`.      `.  \ _.-' \\',: ``\ \\
      / / :..`-'''``-)  `.   _.:''  ''\ \\
     : :  '' `-..''`/    |-''  |''  '' \ \\
-    | |  ''   ''  :     |__..-;''  ''  : :           » {Fore.LIGHTBLACK_EX}Smaug {Fore.GREEN}v1.0 {Fore.LIGHTRED_EX}
+    | |  ''   ''  :     |__..-;''  ''  : :           » {Fore.LIGHTBLACK_EX}Smaug {Fore.GREEN}v{version} {Fore.LIGHTRED_EX}
     | |  ''   ''  |     ;    / ''  ''  | |           » {Fore.LIGHTBLACK_EX}Type {Fore.GREEN}'help'{Fore.LIGHTBLACK_EX} to see all available Commands{Fore.LIGHTRED_EX}
     | |  ''   ''  ;    /--../_ ''_ '' _| |           » {Fore.LIGHTBLACK_EX}Developed by {Fore.GREEN}gokiimax {Fore.LIGHTRED_EX}
     | |  ''  _;:_/    :._  /-.'',-.'',-. |           
@@ -204,20 +207,20 @@ class Application():
 
     def printHelp(self):
         commands = [
-            ['help          ', 'Show all available commands'],
-            ['start server  ', 'Start the rat server'],
-            ['createpayload ', 'Create a payload with your settings'],
-            ['clear         ', 'Clear the console'],
-            ['exit          ', 'Exit the application']
+            ['help                     ', 'Show all available commands'],
+            ['start server             ', 'Start the rat server'],
+            ['createpayload (<payload>)', 'Create a payload with your settings'],
+            ['clear                    ', 'Clear the console'],
+            ['exit                     ', 'Exit the application']
         ]
 
         index = 0
         print("\n")
-        print(f"\t{Fore.LIGHTRED_EX}╭───────────────────╮")
+        print(f"\t{Fore.LIGHTRED_EX}╭──────────────────────────────╮")
         for command in commands:
             print(f"{Fore.LIGHTRED_EX}\t│ {Fore.RESET}{index} {command[0]}{Fore.LIGHTRED_EX}  │{Fore.RESET} {Fore.LIGHTBLACK_EX}»{Fore.RESET} {command[1]}")
             index += 1
-        print(f"\t{Fore.LIGHTRED_EX}╰───────────────────╯")
+        print(f"\t{Fore.LIGHTRED_EX}╰──────────────────────────────╯")
         print("\n")
 
 # ============================================================================================================================ #
@@ -253,7 +256,7 @@ class Application():
                     Utils.clear_command()
 
                 elif command[0] == "createpayload":
-                    self.create_payload()
+                    self.create_payload() 
 
                 elif command[0] == "exit":
                     exit(-1)
@@ -266,11 +269,14 @@ def main():
     Utils.clear()
     print(banner)
 
-    if config.get("discordRPC"):
-        Discord("1083754884114956400")
+    if(config.get("check_for_update")):
+        check_for_update(version=version)
 
     # Start the application
     application = Application()
+    if config.get("discordRPC"):
+        Discord("1083754884114956400", version=f"v{version}")
     application.run()
+
 
 main()

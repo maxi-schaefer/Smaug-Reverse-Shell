@@ -1,5 +1,6 @@
 {
     "host": "localhost",
     "port": 6969,
-    "discordRPC": true
+    "discordRPC": true,
+    "check_for_update": false
 }
