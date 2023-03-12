@@ -2,5 +2,6 @@
     "host": "localhost",
     "port": 6969,
     "discordRPC": true,
-    "check_for_update": false
+    "check_for_update": true,
+    "theme": "red"
 }

