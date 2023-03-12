@@ -48,6 +48,7 @@ pyinstaller --noconfirm --onefile --console "./out/client.pyw"
 - [x] - Create Payload
 - [ ] - Obfuscation for bypass
 - [x] - Update Checker
+- [ ] - Themes
 
 ## Themes
 
