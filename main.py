@@ -23,6 +23,12 @@ elif theme == "green":
     theme_color = Fore.LIGHTGREEN_EX
 elif theme == "purple":
     theme_color = Fore.MAGENTA
+elif theme == "black":
+    theme_color = Fore.BLACK
+elif theme == "white":
+    theme_color = Fore.WHITE
+elif theme == "cyan":
+    theme_color = Fore.CYAN
 
 version = open("./version.txt").read()
 
