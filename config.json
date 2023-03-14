@@ -3,5 +3,7 @@
     "port": 6969,
     "discordRPC": true,
     "check_for_update": true,
-    "theme": "red"
+    "theme": "red",
+    "enableFileHosting": true,
+    "fileHostingPort": 8000
 }

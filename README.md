@@ -17,7 +17,7 @@ cd Smaug
 
 1. Install Requirements
 ```
-python3 -m pip install -r requirements.txt
+./install.bat
 ```
 
 2. Configure [config.json](./config.json) and Create the payload

