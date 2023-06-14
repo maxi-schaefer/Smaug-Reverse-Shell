@@ -2,3 +2,4 @@ colorama==0.4.4
 pyautogui
 pillow
 pypresence
+requests

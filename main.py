@@ -251,6 +251,7 @@ class Application():
             ['help                     ', 'Show all available commands'],
             ['start server             ', 'Start the rat server'],
             ['createpayload            ', 'Create a payload with your settings'],
+            ['build                    ', 'Use this after creating the payload, if you want an exe']
             ['clear                    ', 'Clear the console'],
             ['exit                     ', 'Exit the application']
         ]
@@ -263,6 +264,11 @@ class Application():
             index += 1
         print(f"\t{theme_color}╰──────────────────────────────╯")
         print("\n")
+
+# ============================================================================================================================ #
+
+    def build_payload(self):
+        os.system("./build_payload.bat")
 
 # ============================================================================================================================ #
 
@@ -293,6 +299,9 @@ class Application():
                 elif command[0] == "help":
                     self.printHelp()
 
+                elif command[0] == "build":
+                    self.build_payload()
+
                 elif command[0] == "clear":
                     Utils.clear_command()
 
@@ -302,7 +311,8 @@ class Application():
                 elif command[0] == "exit":
                     exit(-1)
                     break
-            except Exception:
+            except Exception as e:
+                print(e)
                 print("[-] Error running command, check the syntax of the command.")
 
 # ============================================================================================================================ #

@@ -11,7 +11,7 @@ You need python installed to use this application
 
 Clone the repository and cd in to it
 ```
-git clone https://github.com/gokiimax/Smaug.git
+git clone https://github.com/gokiimax/Smaug-Reverse-Shell.git
 cd Smaug
 ```
 
@@ -30,8 +30,13 @@ cd Smaug
 
 3. Create exe from client.pyw
 ```
-python3 -m pip install auto-py-to-exe
-pyinstaller --noconfirm --onefile --console "./out/client.pyw"
+./start.bat
+
+╭── [ Smaug@admin ]
+╰──────# createpayload
+
+╭── [ Smaug@admin ]
+╰──────# build
 ```
 
 4. Send Your new Exe file to your victim and Start the server
@@ -46,7 +51,7 @@ pyinstaller --noconfirm --onefile --console "./out/client.pyw"
 
 - [x] - Config
 - [x] - Create Payload
-- [ ] - Obfuscation for bypass
+- [x] - Obfuscation for bypass
 - [x] - Update Checker
 - [x] - Themes
 
